@@ -4,35 +4,69 @@ namespace App\Http\Controllers\Api\V1\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\V1\UserResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Handle an incoming authentication request.
+     * User Login.
+     *
+     * @param LoginRequest $request
+     * @return JsonResponse
+     * @throws ValidationException
+     * @response {
+     *      "token": "generated_token"
+     *      "data": {
+     *          "id": 1,
+     *          "name": "User",
+     *          "email": "user@email.com"
+     *      }
+     *  }
+     * @response 422 {
+     *      "error": "The provided credentials are incorrect."
+     * }
+     *
      */
-    public function store(LoginRequest $request): Response
+    public function store(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
         $request->authenticate();
+        $user = $request->user();
+        $user->tokens()->delete();
+        $device = substr($request->userAgent() ?? '', 0, 255);
+        $token = $user->createToken($device)->plainTextToken;
 
-        $request->session()->regenerate();
+        return response()->json(['token' => $token, 'data' => new UserResource($user)], 201);
 
-        return response()->noContent();
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout.
+     * @authenticated
+     * @response 204 {
+     *      "message": "Logged out successfully."
+     *  }
+     * @response 402 {
+     *      "message": "Unauthorized user"
+     *  }
+     *
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function destroy(Request $request): Response
+    public function destroy(Request $request): JsonResponse
     {
-        Auth::guard('web')->logout();
+        if(!Auth::check()) {
+            return response()->json(['message' => 'Unauthorized user'], 402);
+        }
 
-        $request->session()->invalidate();
+        Auth::guard('api')->logout();
 
-        $request->session()->regenerateToken();
+        $request->user()->currentAccessToken()->delete();
 
-        return response()->noContent();
+        return response()->json(['message' => 'logged out successfuly'], 204);
     }
 }

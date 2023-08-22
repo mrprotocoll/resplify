@@ -18,9 +18,9 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
-Route::post('/auth/oauth', GoogleAuthController::class)
-    ->middleware('guest')
-    ->name('auth.google');
+//Route::post('/auth/oauth', GoogleAuthController::class)
+//    ->middleware('guest')
+//    ->name('auth.google');
 
 Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
     ->middleware('guest')

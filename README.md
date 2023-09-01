@@ -1,67 +1,183 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+  <h2><b>🕹️🕹️ Resplify API 🕹️🕹️</b></h2>
+  <br/>
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<a name="readme-top"></a>
 
-## About Laravel
+<!-- TABLE OF CONTENTS -->
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# 📗 Table of Contents
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [📖 About the Project](#about-project)
+  - [🛠 Built With](#built-with)
+    - [Tech Stack](#tech-stack)
+    - [Key Features](#key-features)
+  - [🚀 Link to Api Docs](#api-docs)
+  - [🚀 Link to React Frontend](#front-end)
+  - [🚀 Kaban Board](#Kaban-Board)
+    - [Kaban Board Initial State](#initial-state)
+  - [ERD Diagram](#erd)
+- [💻 Getting Started](#getting-started)
+  - [Setup](#setup)
+  - [Prerequisites](#prerequisites)
+  - [Usage](#usage)
+- [🔭 Future Features](#future-features)
+- [🤝 Contributing](#contributing)
+- [⭐️ Show your support](#support)
+- [📝 License](#license)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<!-- PROJECT DESCRIPTION -->
 
-## Learning Laravel
+# 📖 Resplify API <a name="about-project"></a>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**[Resplify API]** is the backend application designed for resplify, a web application for jobseekers who need to update their portfolio and set up their online presence and everything they need to be job ready. You come to the platform to update your resume, LinkedIn profile and generate a cover letter for every job application.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Tech Stack <a name="tech-stack"></a>
 
-## Laravel Sponsors
+- <a href="https://www.php.net/">PHP</a>
+- <a href="https://laravel.com/">Laravel</a>
+- <a href="https://www.mysql.com/">MySQL</a>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+<!-- Features -->
 
-### Premium Partners
+### Key Features <a name="key-features"></a>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+- **[User Registration and Authentication]**
+- **[resume generator and review]**
 
-## Contributing
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<!-- Link to Api Documentation -->
 
-## Code of Conduct
+## 🚀 Link to Api Documentation <a name="api-docs"></a>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+To access the documentation, run the server using `php artisan serve` and goto the above link
 
-## Security Vulnerabilities
+- [Link to api documentation](https://localhost:8000/docs/)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+<br/>
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# resplify
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Link to frontend -->
+
+## 🚀 Link to Front-end <a name="front-end"></a>
+
+- [Link to Front-end](https://github.com/mrprotocoll/resplify)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
+
+## 💻 Getting Started <a name="getting-started"></a>
+
+To get a local copy up and running, follow these steps.
+
+### Prerequisites
+
+In order to run this project you need:
+
+1. git <br>
+use the following link to setup `git` if you dont have it already installed on your computer
+<p align="left">(<a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">install git</a>)</p>
+
+2. PHP ^8.1 <br>
+use the following link to setup `PHP` if you dont have it already installed on your computer
+<p align="left">(<a href="https://www.php.net/manual/en/install.php">install PHP</a>)</p>
+
+3. Composer <br>
+use the following link to Download `Composer` if you dont have it already installed on your computer
+<p align="left">(<a href="https://getcomposer.org/download/">install Composer</a>)</p>
+
+4. MySQL <br>
+use the following link to setup `MySQL` if you dont have it already installed on your computer
+<p align="left">(<a href="https://dev.mysql.com/doc/mysql-getting-started/en/">install MySQL</a>)</p>
+
+## Install
+
+Clone repo:
+
+```
+git clone https://github.com/mrprotocoll/resplify.git
+```
+
+Install dependencies:
+
+```
+composer install
+```
+
+## Setup
+
+create a .env file change using the .env.example file and update the Database and Email credentials. Then setup some configuration with your own credentials
+
+Run the migration:
+
+```
+php artisan migrate
+```
+
+Or run the migration with seeder if you want seeding the related data:
+
+```
+php artisan migrate --seed
+```
+
+Generate a New Application Key:
+
+```
+php artisan key:generate
+```
+
+Create a symbolic link:
+
+```
+php artisan storage:link
+```
+
+### Usage
+
+The following command can be used to run the application.
+
+```sh
+  php artisan serve
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 🔭 Future Features <a name="future-features"></a>
+
+- [ ] **[Automate Job Search]**
+- [ ] **[Track jobs]**
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+
+## 🤝 Contributing <a name="contributing"></a>
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](../../issues/).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- SUPPORT -->
+
+## ⭐️ Show your support <a name="support"></a>
+
+If you like this project, please don't forget to follow the contributors and give it a star.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LICENSE -->
+
+## 📝 License <a name="license"></a>
+
+This project is [MIT](./LICENSE) licensed.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+

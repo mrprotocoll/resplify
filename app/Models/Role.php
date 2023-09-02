@@ -12,6 +12,6 @@ class Role extends Model
     use HasFactory, HasUuids;
 
     public function users() : BelongsToMany{
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 }

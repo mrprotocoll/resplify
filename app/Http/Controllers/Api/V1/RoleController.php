@@ -14,7 +14,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        // return all roles
         return response()->json(['data' => Role::all()], 200);
     }
 
@@ -23,12 +23,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate role
         $validated = $request->validate([
             'name' => ['required', 'max:50', 'unique:roles']
         ]);
+
+        // initialise role
         $role = new Role();
-        $role->name = $request->name;
+        $role->name = $validated->name;
+
+        // save role
         if($role->save()) {
             return GlobalHelper::response($role, 'Role created successfully');
         }else{
@@ -37,34 +41,23 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Role $role)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Role $role)
     {
-        //
+        // validate role
+        $validated = $request->validate([
+            'name' => ['required', 'max:50', 'unique:roles']
+        ]);
+
+        $role->name = $validated->name;
+
+        // save role
+        if($role->save()) {
+            return GlobalHelper::response($role, 'Role updated successfully');
+        }else{
+            return GlobalHelper::error();
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Role $role)
-    {
-        //
-    }
 }

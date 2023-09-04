@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Helper\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -14,14 +15,7 @@ class RoleController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json(['data' => Role::all()], 200);
     }
 
     /**
@@ -30,6 +24,16 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        $validated = $request->validate([
+            'name' => ['required', 'max:50', 'unique:roles']
+        ]);
+        $role = new Role();
+        $role->name = $request->name;
+        if($role->save()) {
+            return GlobalHelper::response($role, 'Role created successfully');
+        }else{
+            return GlobalHelper::error();
+        }
     }
 
     /**

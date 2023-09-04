@@ -19,8 +19,7 @@ class RoleMiddleware
             abort(401);
         }
 
-//        print_r(auth()->user());
-        if (auth()->user()->role != $role) {
+        if (!auth()->user()->hasRole($role)) {
             abort(403, "Permission denied");
         }
 

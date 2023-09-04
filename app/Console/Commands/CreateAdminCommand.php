@@ -17,7 +17,7 @@ class CreateAdminCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-admin-command';
+    protected $signature = 'app:create-admin';
 
     /**
      * The console command description.
@@ -32,10 +32,9 @@ class CreateAdminCommand extends Command
     public function handle()
     {
         //
-        $user = new User();
-        $user->name = $this->ask('Name of the user');
-        $user->email = $this->ask('Email of the user');
-        $user->password = $this->secret('Password of the user');
+        $user['name'] = $this->ask('Name of the user');
+        $user['email'] = $this->ask('Email of the user');
+        $user['password'] = $this->secret('Password of the user');
         $role = Role::where('name', 'admin')->first();
 
         $validator = Validator::make($user, [
@@ -54,8 +53,8 @@ class CreateAdminCommand extends Command
 
 
         DB::transaction(function () use ($user, $role) {
-            $user->password = Hash::make($user->password);
-            $user->save();
+            $user['password'] = Hash::make($user['password']);
+            $user = User::create($user);
             $user->roles()->attach($role->id);
         });
 

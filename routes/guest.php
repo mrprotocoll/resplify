@@ -18,6 +18,8 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest')
     ->name('login');
 
+Route::post('/admin/login', \App\Http\Controllers\Api\V1\Admin\Auth\LoginController::class);
+
 //Route::post('/auth/oauth', GoogleAuthController::class)
 //    ->middleware('guest')
 //    ->name('auth.google');

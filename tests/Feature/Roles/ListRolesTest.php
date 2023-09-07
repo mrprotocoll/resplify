@@ -34,11 +34,11 @@ class ListRolesTest extends TestCase
     public function test_to_get_all_roles(): void
     {
 
-        $response = $this->actingAs($this->admin)->get('/api/api/admin/roles');
+        $response = $this->actingAs($this->admin)->get('/api/v1/admin/roles');
 
         // 200 status
         $response->assertStatus(200);
-        $response->assertJsonCount(1, 'data');
+        $response->assertJsonCount(3, 'data');
         // check that it returns an array of roles
         $response->assertJsonFragment(['name' => 'admin']);
     }
@@ -46,7 +46,7 @@ class ListRolesTest extends TestCase
     public function test_only_admin_can_get_roles(): void
     {
 
-        $response = $this->actingAs($this->user)->get('/api/admin/roles');
+        $response = $this->actingAs($this->user)->get('/api/v1/admin/roles');
 
         // 200 status
         $response->assertStatus(403);
@@ -54,7 +54,7 @@ class ListRolesTest extends TestCase
 
     public function test_public_users_cannot_get_roles(): void
     {
-        $response = $this->get('/api/v1/admin/roles');
+        $response = $this->getJson('/api/v1/admin/roles');
 
         $response->assertStatus(401);
     }

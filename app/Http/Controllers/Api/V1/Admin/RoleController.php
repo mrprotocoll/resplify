@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Helper\GlobalHelper;
 use App\Http\Controllers\Controller;
@@ -30,11 +30,11 @@ class RoleController extends Controller
 
         // initialise role
         $role = new Role();
-        $role->name = $validated->name;
+        $role->name = $validated['name'];
 
         // save role
         if($role->save()) {
-            return GlobalHelper::response($role, 'Role created successfully');
+            return GlobalHelper::response(data: $role, message: 'Role created successfully', status: 201);
         }else{
             return GlobalHelper::error();
         }
@@ -50,7 +50,7 @@ class RoleController extends Controller
             'name' => ['required', 'max:50', 'unique:roles']
         ]);
 
-        $role->name = $validated->name;
+        $role->name = $validated['name'];
 
         // save role
         if($role->save()) {

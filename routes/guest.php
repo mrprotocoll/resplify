@@ -10,9 +10,15 @@ use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
+// register users
+Route::post('/user/register', [RegisteredUserController::class, 'user'])
     ->middleware('guest')
     ->name('register');
+
+// Register reviewers
+Route::post('/reviewer/register', [RegisteredUserController::class, 'reviewer'])
+    ->middleware('guest')
+    ->name('reviewer_register');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest')

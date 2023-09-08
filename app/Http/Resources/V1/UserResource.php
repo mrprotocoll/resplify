@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             "name" => $this->name,
             "email" => $this->email,
-            "roles" =>  $this->roles
+            "roles" =>  $this->roles->pluck('name') // Extract role names only
         ];
     }
 }

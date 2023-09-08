@@ -50,7 +50,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
-    public function current() {
+    public static function current() {
         return Auth::user();
     }
 

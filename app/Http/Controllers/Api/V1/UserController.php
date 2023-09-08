@@ -12,16 +12,31 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @group Logged-in User
+ * Used for the currently logged-in user info
+ */
 class UserController extends Controller
 {
+
     /**
-     * Display the specified resource.
+     * Display information about the currently logged-in user.
+     *
+     * @authenticated
+     *
+     * @response {
+     *     "data": {
+     *         "id": 1,
+     *         "name": "John Doe",
+     *         "email": "johndoe@example.com",
+     *     }
+     * }
+     *
+     * @return UserResource
      */
-    public function show(string $id)
+    public function show() : UserResource
     {
-        //
-        $user = User::find($id);
-        return GlobalHelper::response(new UserResource($user));
+        return new UserResource(User::current());
     }
 
 

@@ -11,8 +11,8 @@ class GlobalHelper
         return response()->json(['error' => 'Oops something went wrong'], 500);
     }
 
-    public static function response($data, string $message = null, $status = null): JsonResponse{
-        $response['date']  = $data;
+    public static function response($data = null, string $message = null, $status = null): JsonResponse{
+        $data ?? $response['date'] = $data;
         if($message) {
             $response['message']  = $message;
         }

@@ -15,18 +15,6 @@ use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index(RoleEnum|string $role = RoleEnum::USER)
-    {
-        $user = User::whereHas('roles', function ($query) use ($role) {
-            $query->where('name', $role);
-        })->paginate();
-
-        return GlobalHelper::response(UserResource::collection($user));
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['admin','customer','reviewer'])->default('customer');
             $table->boolean('oauth')->default(false);
             $table->string('oauth_id')->nullable();
             $table->enum('oauth_type',['email','google'])->default('email');

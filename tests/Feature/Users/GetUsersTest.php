@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class StoreUserTest extends TestCase
+class GetUsersTest extends TestCase
 {
     /**
      * A basic feature test example.

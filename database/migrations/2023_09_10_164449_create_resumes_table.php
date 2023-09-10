@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resume_models', function (Blueprint $table) {
-            $table->id();
+        Schema::create('resumes', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('file_name');
+            $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resume_models');
+        Schema::dropIfExists('resumes');
     }
 };

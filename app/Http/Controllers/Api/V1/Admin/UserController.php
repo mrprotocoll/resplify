@@ -31,7 +31,7 @@ class UserController extends Controller
      *
      * @return ResourceCollection
      */
-    private function index(RoleEnum|string $role): ResourceCollection
+    private function index(RoleEnum $role): ResourceCollection
     {
         if($role)
             $user = User::whereHas('roles', function ($query) use ($role) {

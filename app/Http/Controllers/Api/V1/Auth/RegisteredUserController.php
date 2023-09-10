@@ -10,10 +10,8 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 
@@ -24,13 +22,13 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request, Role $role): JsonResponse
+    private function store(Request $request, Role $role): JsonResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', Rule::In([RoleEnum::USER, RoleEnum::REVIEWER])]
+            'password' => ['required', Rules\Password::defaults()],
+//            'role' => ['required', Rule::In([RoleEnum::USER, RoleEnum::REVIEWER])]
         ]);
 
         $user = User::create([
@@ -49,22 +47,21 @@ class RegisteredUserController extends Controller
         $token = $user->createToken($device)->plainTextToken;
 
         return response()->json(['token' => $token, 'data' => new UserResource($user)], 201);
-
     }
 
     /**
      * @throws ValidationException
      */
-    public function user(Request $request): void
+    public function user(Request $request): JsonResponse
     {
-        $this->store($request, Role::where('name', RoleEnum::USER)->first());
+        return $this->store($request, Role::get(RoleEnum::USER));
     }
 
     /**
      * @throws ValidationException
      */
-    public function reviewer(Request $request): void
+    public function reviewer(Request $request): JsonResponse
     {
-        $this->store($request, Role::where('name', RoleEnum::REVIEWER)->first());
+        return $this->store($request, Role::get(RoleEnum::REVIEWER));
     }
 }

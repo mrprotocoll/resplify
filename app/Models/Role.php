@@ -24,9 +24,9 @@ class Role extends Model
     /**
      * get a role
      * @param RoleEnum $role
-     * @return mixed
+     * @return Role
      */
-    public static function get(RoleEnum $role) {
+    public static function get(RoleEnum $role): Role {
         return self::where('name', $role)->first();
     }
 

@@ -24,9 +24,9 @@ class ListUsersTest extends TestCase
         $this->seed(RoleSeeder::class);
         $this->admin = User::factory()->create();
         $this->user = User::factory()->create();
-        User::factory()->create()->attach(Role::get(RoleEnum::REVIEWER));
+        User::factory()->create()->roles()->attach(Role::get(RoleEnum::REVIEWER));
         $this->admin->roles()->attach(Role::get(RoleEnum::ADMIN));
-        $this->user->roles()->attach(Role::get(RoleEnum::REVIEWER));
+        $this->user->roles()->attach(Role::get(RoleEnum::USER));
     }
 
     // test that only admin gets all users
@@ -39,8 +39,10 @@ class ListUsersTest extends TestCase
         $response->assertStatus(200);
         // ensure only roles with users are listed
         $response->assertJsonCount(1, 'data');
+        $response->assertJsonMissing(['email' => $this->admin->email]);
         // check that it returns user data
         $response->assertJsonFragment(['name' => $this->user->name]);
+
     }
 
     public function test_only_admin_can_get_users(): void

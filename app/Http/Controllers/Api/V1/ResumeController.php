@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Controllers\Controller;
 use App\Models\Resume;
 use Illuminate\Http\Request;
 
@@ -11,14 +12,6 @@ class ResumeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
         //
     }
@@ -35,14 +28,6 @@ class ResumeController extends Controller
      * Display the specified resource.
      */
     public function show(Resume $resume)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Resume $resume)
     {
         //
     }

@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -45,20 +47,31 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    private mixed $roles;
 
     public function roles() : BelongsToMany{
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
-    public static function current() {
+    public function resumes(): HasMany {
+        return $this->hasMany(Resume::class);
+    }
+
+    /**
+     * get the currently logged-in user info
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public static function current(): ?\Illuminate\Contracts\Auth\Authenticatable
+    {
         return Auth::user();
     }
 
     /**
-     * check if user belongs to a role
-     * @param $role role name
+     * check if a user belongs to the provided role
+     * @param RoleEnum $role
+     * @return bool
      */
-    public function hasRole($role) {
-        return $this->roles->contains(Role::where('name', $role)->first());
+    public function hasRole(RoleEnum $role): bool {
+        return $this->roles->contains(Role::get($role));
     }
 }

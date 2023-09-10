@@ -21,7 +21,7 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertStatus(201);
-        // response should include role as a user
+        // response should include a role as a user
         $response->assertJsonFragment(['roles' => ['user']]);
     }
 
@@ -37,7 +37,7 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticated();
         $response->assertStatus(201);
-        // response should include role as a reviewer
+        // response should include a role as a reviewer
         $response->assertJsonFragment(['roles' => ['reviewer']]);
     }
 }

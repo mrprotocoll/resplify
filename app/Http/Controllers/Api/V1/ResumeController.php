@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Helpers\FileHelper;
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ResumeResource;
 use App\Models\Resume;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
 {
@@ -15,7 +19,6 @@ class ResumeController extends Controller
      */
     public function index()
     {
-        //
         $resumes = User::current()->resumes;
 
         return ResumeResource::collection($resumes);
@@ -26,30 +29,41 @@ class ResumeController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $user = User::current();
+        $request = $request->validated();
+        $count = 0;
+        $successfullyStoredResumes = [];
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Resume $resume)
-    {
-        //
-    }
+        foreach ($request->file('resumes') as $resume) {
+            $resumeName = "resumes/". FileHelper::formatName($resume->getClientOriginalName());
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Resume $resume)
-    {
-        //
+            // Store the résumé in the 'public' disk (storage/app/public)
+            Storage::disk('public')->put($resumeName, file_get_contents($resume));
+
+            // Save the resume file name in the database
+            $save = $user->resumes()->create(['name' => $resumeName]);
+            if($save) {
+                $count++;
+                $successfullyStoredResumes[] = new ResumeResource($save);
+            }
+        }
+
+        if($count < 1) {
+            return GlobalHelper::error();
+        }else{
+            return ResumeResource::collection($successfullyStoredResumes);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Resume $resume)
+    public function destroy(Resume $resume): JsonResponse|ResumeResource
     {
-        //
+        $deleted = $resume;
+        if($resume->delete())
+            return new ResumeResource($deleted);
+        else
+            return GlobalHelper::error();
     }
 }

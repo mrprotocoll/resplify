@@ -22,8 +22,8 @@ class ResumeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required','array'],
-            'file.*' => ['file','mimes:pdf,doc,docx','max:2048'],
+            'resumes' => ['required','array'],
+            'resumes.*' => ['file','mimes:pdf,doc,docx','max:2048'],
         ];
     }
 }

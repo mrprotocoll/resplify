@@ -24,7 +24,6 @@ class ShowUsersTest extends TestCase
         $this->admin = User::factory()->create();
         $this->user = User::factory()->create();
         $this->url = '/api/v1/admin/users/'.$this->user->id;
-        $this->reviewer = User::factory()->create();
         $this->admin->roles()->attach(Role::get(RoleEnum::ADMIN));
         $this->user->roles()->attach(Role::get(RoleEnum::USER));
     }
@@ -37,6 +36,7 @@ class ShowUsersTest extends TestCase
         $response->assertJsonFragment(['id' => $this->user->id]);
         $response->assertJsonMissing(['email' => $this->admin->email]);
     }
+
     // test that response gets data of the currently logged-in user
     public function test_get_currently_logged_in_user() {
         $response = $this->actingAs($this->user)->get('/api/v1/me');

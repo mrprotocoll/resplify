@@ -6,5 +6,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum', 'role:'. RoleEnum::USER->value])->group(function () {
     Route::apiResource('resumes', ResumeController::class)
-        ->only(['store', 'destroy']);
+        ->only(['index', 'store', 'destroy']);
 });

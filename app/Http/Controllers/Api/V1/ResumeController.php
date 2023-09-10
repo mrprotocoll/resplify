@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Helpers\FileHelper;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\ResumeRequest;
 use App\Http\Resources\V1\ResumeResource;
 use App\Models\Resume;
 use App\Models\User;
@@ -27,25 +28,28 @@ class ResumeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ResumeRequest $request)
     {
         $user = User::current();
-        $request = $request->validated();
         $count = 0;
         $successfullyStoredResumes = [];
 
-        foreach ($request->file('resumes') as $resume) {
-            $resumeName = "resumes/". FileHelper::formatName($resume->getClientOriginalName());
+        if ($request->hasFile('resumes')) {
+            foreach ($request->file('resumes') as $resume) {
+                $resumeName = "resumes/" . FileHelper::formatName($resume->getClientOriginalName());
 
-            // Store the résumé in the 'public' disk (storage/app/public)
-            Storage::disk('public')->put($resumeName, file_get_contents($resume));
+                // Store the résumé in the 'public' disk (storage/app/public)
+                Storage::disk('public')->put($resumeName, file_get_contents($resume));
 
-            // Save the resume file name in the database
-            $save = $user->resumes()->create(['name' => $resumeName]);
-            if($save) {
-                $count++;
-                $successfullyStoredResumes[] = new ResumeResource($save);
+                // Save the resume file name in the database
+                $save = $user->resumes()->create(['name' => $resumeName]);
+                if ($save) {
+                    $count++;
+                    $successfullyStoredResumes[] = new ResumeResource($save);
+                }
             }
+        }else{
+            return GlobalHelper::error('No resume file found', 404);
         }
 
         if($count < 1) {

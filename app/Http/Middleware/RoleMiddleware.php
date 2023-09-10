@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\RoleEnum;
+use App\Helpers\GlobalHelper;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +19,13 @@ class RoleMiddleware
     public function handle(Request $request, Closure $next, String $role): Response
     {
         if(!auth()->check()){
-            abort(401);
+//            abort(401);
+            return GlobalHelper::error('Authentication Required', 401);
         }
 
-        if (!auth()->user()->hasRole($role)) {
-            abort(403, "Permission denied");
+        if (!User::current()->hasRole(RoleEnum::from($role))) {
+//            abort(403, "Permission denied");
+            return GlobalHelper::error('Permission denied', 403);
         }
 
         return $next($request);

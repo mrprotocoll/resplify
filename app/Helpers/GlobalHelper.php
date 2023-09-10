@@ -6,9 +6,9 @@ use Illuminate\Http\JsonResponse;
 
 class GlobalHelper
 {
-    public static function error(): JsonResponse
+    public static function error($message = 'Oops something went wrong', $status = 500): JsonResponse
     {
-        return response()->json(['error' => 'Oops something went wrong'], 500);
+        return response()->json(['error' => $message], $status);
     }
 
     public static function response($data = null, string $message = null, $status = null): JsonResponse

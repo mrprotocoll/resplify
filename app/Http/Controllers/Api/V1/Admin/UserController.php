@@ -9,6 +9,7 @@ use App\Http\Resources\V1\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -28,9 +29,9 @@ class UserController extends Controller
      *
      * @param RoleEnum|string $role The role to filter the users by. If not provided, all users are listed.
      *
-     * @return JsonResponse
+     * @return ResourceCollection
      */
-    public function index(RoleEnum|string $role): JsonResponse
+    private function index(RoleEnum|string $role): ResourceCollection
     {
         if($role)
             $user = User::whereHas('roles', function ($query) use ($role) {
@@ -39,7 +40,7 @@ class UserController extends Controller
         else
             $user = User::paginate();
 
-        return GlobalHelper::response(UserResource::collection($user));
+        return UserResource::collection($user);
     }
 
     /**
@@ -50,9 +51,9 @@ class UserController extends Controller
      * @queryParam page int The page number for pagination (default: 1).
      * @queryParam per_page int The number of items per page (default: 15).
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return ResourceCollection
      */
-    public function user(): JsonResponse
+    public function user(): ResourceCollection
     {
         return $this->index(RoleEnum::USER);
     }
@@ -65,9 +66,9 @@ class UserController extends Controller
      * @queryParam page int The page number for pagination (default: 1).
      * @queryParam per_page int The number of items per page (default: 15).
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return ResourceCollection
      */
-    public function reviewer(): JsonResponse
+    public function reviewer(): ResourceCollection
     {
         return $this->index(RoleEnum::REVIEWER);
     }
@@ -80,9 +81,9 @@ class UserController extends Controller
      * @queryParam page int The page number for pagination (default: 1).
      * @queryParam per_page int The number of items per page (default: 15).
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return ResourceCollection
      */
-    public function admin(): JsonResponse
+    public function admin(): ResourceCollection
     {
         return $this->index(RoleEnum::ADMIN);
     }
@@ -98,9 +99,9 @@ class UserController extends Controller
      *
      * @param  string  $id  The unique identifier of the user.
      *
-     * @return \App\Http\Resources\UserResource
+     * @return JsonResponse|UserResource
      */
-    public function show(string $id): JsonResponse
+    public function show(string $id): JsonResponse|UserResource
     {
         // Find the user by ID
         $user = User::find($id);
@@ -111,6 +112,6 @@ class UserController extends Controller
         }
 
         // Return a successful response with the user resource
-        return GlobalHelper::response(new UserResource($user));
+        return new UserResource($user);
     }
 }

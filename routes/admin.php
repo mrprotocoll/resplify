@@ -9,7 +9,7 @@ Route::prefix('admin')->group(function () {
         Route::apiResource('roles', \App\Http\Controllers\Api\V1\Admin\RoleController::class)
             ->only(['index','store', 'update']);
 
-        // get all users
+        // get all customers
         Route::get('/users', [UserController::class, 'user']);
         // get all reviewers
         Route::get('/reviewers', [UserController::class, 'reviewer']);

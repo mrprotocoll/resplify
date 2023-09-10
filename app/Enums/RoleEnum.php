@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum RoleEnum
+enum RoleEnum: string
 {
-    const ADMIN = 'admin';
-    const USER = 'user';
-    const REVIEWER = 'reviewer';
+    case ADMIN = 'admin';
+    case USER = 'user';
+    case REVIEWER = 'reviewer';
 }

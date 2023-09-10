@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,18 @@ class Role extends Model
         'name'
     ];
 
+    // create relationship with users
     public function users() : BelongsToMany{
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    /**
+     * get a role
+     * @param RoleEnum $role
+     * @return mixed
+     */
+    public static function get(RoleEnum $role) {
+        return self::where('name', $role)->first();
+    }
+
 }

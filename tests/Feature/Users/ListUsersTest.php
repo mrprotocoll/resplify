@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Users;
 
+use App\Enums\RoleEnum;
 use App\Models\Role;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
@@ -23,12 +24,12 @@ class ListUsersTest extends TestCase
         $this->seed(RoleSeeder::class);
         $this->admin = User::factory()->create();
         $this->user = User::factory()->create();
-        $this->admin->roles()->attach(Role::where('name', 'admin')->first());
-        $this->user->roles()->attach(Role::where('name','!=', 'admin')->first());
+        User::factory()->create()->attach(Role::get(RoleEnum::REVIEWER));
+        $this->admin->roles()->attach(Role::get(RoleEnum::ADMIN));
+        $this->user->roles()->attach(Role::get(RoleEnum::REVIEWER));
     }
 
     // test that only admin gets all users
-    // to test that it returns an array of users
     public function test_to_get_all_users(): void
     {
 
@@ -36,6 +37,7 @@ class ListUsersTest extends TestCase
 
         // 200 status
         $response->assertStatus(200);
+        // ensure only roles with users are listed
         $response->assertJsonCount(1, 'data');
         // check that it returns user data
         $response->assertJsonFragment(['name' => $this->user->name]);

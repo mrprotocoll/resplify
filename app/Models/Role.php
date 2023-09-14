@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,10 +23,10 @@ class Role extends Model
 
     /**
      * get a role
-     * @param ReviewStatusEnum $role
+     * @param RoleEnum $role
      * @return Role
      */
-    public static function get(ReviewStatusEnum $role): Role {
+    public static function get(RoleEnum $role): Role {
         return self::where('name', $role)->first();
     }
 

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('reviewer_id')->constrained('users')->onDelete('cascade');
             $table->foreignUuid('resume_id')->constrained()->onDelete('cascade');
-            $table->foreignUuid('review_id')->constrained()->onDelete('cascade');
             $table->text('summary');
             $table->enum('status', [ReviewStatusEnum::values()])->default(ReviewStatusEnum::PENDING);
             $table->dateTimeTz('assigned_at');

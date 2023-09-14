@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\ReviewStatusEnum;
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -75,25 +75,25 @@ class User extends Authenticatable
 
     /**
      * check if a user belongs to the provided role
-     * @param ReviewStatusEnum $role
+     * @param RoleEnum $role
      * @return bool
      */
-    public function hasRole(ReviewStatusEnum $role): bool {
+    public function hasRole(RoleEnum $role): bool {
         return $this->roles->contains(Role::get($role));
     }
 
     public function isAdmin(): bool
     {
-        return $this->hasRole(ReviewStatusEnum::ADMIN);
+        return $this->hasRole(RoleEnum::ADMIN);
     }
 
     public function isReviewer(): bool
     {
-        return $this->hasRole(ReviewStatusEnum::REVIEWER);
+        return $this->hasRole(RoleEnum::REVIEWER);
     }
 
     public function isUser(): bool
     {
-        return $this->hasRole(ReviewStatusEnum::USER);
+        return $this->hasRole(RoleEnum::USER);
     }
 }

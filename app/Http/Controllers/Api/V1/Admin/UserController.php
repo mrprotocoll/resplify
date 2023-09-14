@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\RoleEnum;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\UserResource;
@@ -27,11 +27,11 @@ class UserController extends Controller
      * @queryParam page int The page number for pagination (default: 1).
      * @queryParam per_page int The number of items per page (default: 15).
      *
-     * @param ReviewStatusEnum|string $role The role to filter the users by. If not provided, all users are listed.
+     * @param RoleEnum|string $role The role to filter the users by. If not provided, all users are listed.
      *
      * @return ResourceCollection
      */
-    private function index(ReviewStatusEnum $role): ResourceCollection
+    private function index(RoleEnum $role): ResourceCollection
     {
         if($role)
             $user = User::whereHas('roles', function ($query) use ($role) {
@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function user(): ResourceCollection
     {
-        return $this->index(ReviewStatusEnum::USER);
+        return $this->index(RoleEnum::USER);
     }
 
     /**
@@ -70,7 +70,7 @@ class UserController extends Controller
      */
     public function reviewer(): ResourceCollection
     {
-        return $this->index(ReviewStatusEnum::REVIEWER);
+        return $this->index(RoleEnum::REVIEWER);
     }
 
     /**
@@ -85,7 +85,7 @@ class UserController extends Controller
      */
     public function admin(): ResourceCollection
     {
-        return $this->index(ReviewStatusEnum::ADMIN);
+        return $this->index(RoleEnum::ADMIN);
     }
 
     /**

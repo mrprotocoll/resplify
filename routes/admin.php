@@ -1,11 +1,11 @@
 <?php
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function () {
-    Route::middleware(['auth:sanctum', 'role:'. ReviewStatusEnum::ADMIN->value])->group(function () {
+    Route::middleware(['auth:sanctum', 'role:'. RoleEnum::ADMIN->value])->group(function () {
         Route::apiResource('roles', \App\Http\Controllers\Api\V1\Admin\RoleController::class)
             ->only(['index','store', 'update']);
 

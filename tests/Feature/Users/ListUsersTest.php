@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Users;
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\RoleEnum;
 use App\Models\Role;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
@@ -24,9 +24,9 @@ class ListUsersTest extends TestCase
         $this->seed(RoleSeeder::class);
         $this->admin = User::factory()->create();
         $this->user = User::factory()->create();
-        User::factory()->create()->roles()->attach(Role::get(ReviewStatusEnum::REVIEWER));
-        $this->admin->roles()->attach(Role::get(ReviewStatusEnum::ADMIN));
-        $this->user->roles()->attach(Role::get(ReviewStatusEnum::USER));
+        User::factory()->create()->roles()->attach(Role::get(RoleEnum::REVIEWER));
+        $this->admin->roles()->attach(Role::get(RoleEnum::ADMIN));
+        $this->user->roles()->attach(Role::get(RoleEnum::USER));
     }
 
     // test that only admin gets all users

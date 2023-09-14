@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Auth;
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\UserResource;
 use App\Models\Role;
@@ -54,7 +54,7 @@ class RegisteredUserController extends Controller
      */
     public function user(Request $request): JsonResponse
     {
-        return $this->store($request, Role::get(ReviewStatusEnum::USER));
+        return $this->store($request, Role::get(RoleEnum::USER));
     }
 
     /**
@@ -62,6 +62,6 @@ class RegisteredUserController extends Controller
      */
     public function reviewer(Request $request): JsonResponse
     {
-        return $this->store($request, Role::get(ReviewStatusEnum::REVIEWER));
+        return $this->store($request, Role::get(RoleEnum::REVIEWER));
     }
 }

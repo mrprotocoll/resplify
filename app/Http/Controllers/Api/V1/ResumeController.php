@@ -55,7 +55,7 @@ class ResumeController extends Controller
         if($count < 1) {
             return GlobalHelper::error();
         }else{
-            return ResumeResource::collection($successfullyStoredResumes);
+            return GlobalHelper::response(data:ResumeResource::collection($successfullyStoredResumes), status: 201);
         }
     }
 

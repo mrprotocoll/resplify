@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\RoleEnum;
+use App\Enums\ReviewStatusEnum;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -55,7 +55,7 @@ class CreateAdminCommand extends Command
         DB::transaction(function () use ($user) {
             $user['password'] = Hash::make($user['password']);
             $user = User::create($user);
-            $role = Role::where('name', RoleEnum::ADMIN)->first();
+            $role = Role::where('name', ReviewStatusEnum::ADMIN)->first();
             $user->roles()->attach($role);
         });
 

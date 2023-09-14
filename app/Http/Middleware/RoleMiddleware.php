@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Enums\RoleEnum;
+use App\Enums\ReviewStatusEnum;
 use App\Helpers\GlobalHelper;
 use App\Models\User;
 use Closure;
@@ -23,7 +23,7 @@ class RoleMiddleware
             return GlobalHelper::error('Authentication Required', 401);
         }
 
-        if (!User::current()->hasRole(RoleEnum::from($role))) {
+        if (!User::current()->hasRole(ReviewStatusEnum::from($role))) {
 //            abort(403, "Permission denied");
             return GlobalHelper::error('Permission denied', 403);
         }

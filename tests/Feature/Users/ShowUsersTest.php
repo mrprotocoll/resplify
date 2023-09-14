@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Users;
 
-use App\Enums\RoleEnum;
+use App\Enums\ReviewStatusEnum;
 use App\Models\Role;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
@@ -24,8 +24,8 @@ class ShowUsersTest extends TestCase
         $this->admin = User::factory()->create();
         $this->user = User::factory()->create();
         $this->url = '/api/v1/admin/users/'.$this->user->id;
-        $this->admin->roles()->attach(Role::get(RoleEnum::ADMIN));
-        $this->user->roles()->attach(Role::get(RoleEnum::USER));
+        $this->admin->roles()->attach(Role::get(ReviewStatusEnum::ADMIN));
+        $this->user->roles()->attach(Role::get(ReviewStatusEnum::USER));
     }
 
     // test that response shows the user that owns the id passed

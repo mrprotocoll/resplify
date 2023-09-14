@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin\Auth;
 
-use App\Enums\RoleEnum;
+use App\Enums\ReviewStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Auth\LoginRequest;
 use App\Http\Resources\V1\UserResource;
@@ -43,7 +43,7 @@ class LoginController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'The provided credentials are incorrect.'], 422);
         }
-        if(!$user->hasRole(RoleEnum::ADMIN)){
+        if(!$user->hasRole(ReviewStatusEnum::ADMIN)){
             return response()->json(['error' => 'Permission Denied'], 403);
         }
 

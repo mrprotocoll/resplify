@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Reviewer;
 
-use App\Enums\RoleEnum;
+use App\Enums\ReviewStatusEnum;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Resources\V1\UserResource;

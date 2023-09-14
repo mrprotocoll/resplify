@@ -57,6 +57,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Relationship with resume reviewer
+     * @return HasMany
+     */
+    public function reviews(): HasMany {
+        return $this->hasMany(ResumeReview::class);
+    }
+
+    /**
      * get the currently logged-in user info
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */

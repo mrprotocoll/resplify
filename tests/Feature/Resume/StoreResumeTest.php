@@ -36,7 +36,6 @@ class StoreResumeTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson($this->url, $request);
 
-        // assert that resume must be an array of resume, and must not be empty
         // assert that file is uploaded
         $response->assertStatus(201);
         // assert that file is stored in disk
@@ -51,7 +50,7 @@ class StoreResumeTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson($this->url, $request);
 
-        // assert that resume must be an array of resume, and must not be empty
+        // assert that resume must be an array of resumes
         $response->assertStatus(422);
     }
 
@@ -62,7 +61,7 @@ class StoreResumeTest extends TestCase
 
         $response = $this->actingAs($this->user)->postJson($this->url, $request);
 
-        // assert that resume must be an array of resume, and must not be empty
+        // assert that the résumé must not be empty
         $response->assertStatus(422);
     }
 

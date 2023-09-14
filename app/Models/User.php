@@ -73,4 +73,19 @@ class User extends Authenticatable
     public function hasRole(RoleEnum $role): bool {
         return $this->roles->contains(Role::get($role));
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(RoleEnum::ADMIN);
+    }
+
+    public function isReviewer(): bool
+    {
+        return $this->hasRole(RoleEnum::REVIEWER);
+    }
+
+    public function isUser(): bool
+    {
+        return $this->hasRole(RoleEnum::USER);
+    }
 }

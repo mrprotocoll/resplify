@@ -8,20 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class ResumeReview extends Model
+class Remark extends Model
 {
     use HasFactory, HasUuids;
 
-    public function resume(): BelongsTo{
-        return $this->belongsTo(Resume::class);
-    }
+    protected $fillable = [
+        'name',
+        'description',
+        'image'
+    ];
 
-    public function reviewer(): BelongsTo{
+    public function user(): BelongsTo{
         return $this->belongsTo(User::class);
     }
 
-    public function remarks(): BelongsToMany{
-        return $this->belongsToMany(Remark::class)->withPivot(['description', 'score']);
+    public function reviews(): BelongsToMany{
+        return $this->belongsToMany(ResumeReview::class)->withPivot(['description', 'score']);
     }
-
 }

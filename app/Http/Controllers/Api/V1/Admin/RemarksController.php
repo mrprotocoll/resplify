@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Remarks;
+use App\Models\Remark;
 use Illuminate\Http\Request;
 
 class RemarksController extends Controller
@@ -35,7 +35,7 @@ class RemarksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Remarks $remarks)
+    public function show(Remark $remarks)
     {
         //
     }
@@ -43,7 +43,7 @@ class RemarksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Remarks $remarks)
+    public function edit(Remark $remarks)
     {
         //
     }
@@ -51,7 +51,7 @@ class RemarksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Remarks $remarks)
+    public function update(Request $request, Remark $remarks)
     {
         //
     }
@@ -59,7 +59,7 @@ class RemarksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Remarks $remarks)
+    public function destroy(Remark $remarks)
     {
         //
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->string('image');
-            $table->foreignUuid('created_by')->constrained('user')->onDelete('cascade');
+            $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

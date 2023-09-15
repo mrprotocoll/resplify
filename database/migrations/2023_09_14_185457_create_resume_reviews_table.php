@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Run the migrations.
      */
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('reviewer_id')->constrained('users')->onDelete('cascade');
             $table->foreignUuid('resume_id')->constrained()->onDelete('cascade');
             $table->text('summary');
-            $table->enum('status', [ReviewStatusEnum::values()])->default(ReviewStatusEnum::PENDING);
+            $table->enum('status', ReviewStatusEnum::values())->default(ReviewStatusEnum::PENDING->value);
             $table->dateTimeTz('assigned_at');
             $table->timestamps();
         });

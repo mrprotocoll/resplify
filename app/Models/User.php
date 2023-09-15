@@ -87,7 +87,7 @@ class User extends Authenticatable
      * @return bool
      */
     public function hasRole(RoleEnum $role): bool {
-        return $this->roles->contains(Role::get($role));
+        return $this->roles()->where('name', $role->value)->exists();
     }
 
     public function isAdmin(): bool

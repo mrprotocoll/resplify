@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\ResumeRequest;
+use App\Http\Requests\V1\ResumeReviewRequest;
+use App\Models\Resume;
 use App\Models\ResumeReview;
 use Illuminate\Http\Request;
 
@@ -17,19 +20,18 @@ class ResumeReviewController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ResumeReviewRequest $request)
     {
-        //
+        $save = Resume::upload($request->file('resume'), $request->job_titles);
+        if($save) {
+            // create a new resume request from the newly created resume resume
+            $resumeRequest = new ResumeReview();
+            $save->review()->create([
+                "reviewer_id" => $request->reviewer,
+            ]);
+        }
     }
 
     /**

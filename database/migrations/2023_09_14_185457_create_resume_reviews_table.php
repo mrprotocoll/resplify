@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('resume_reviews', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('reviewer_id')->constrained('users')->onDelete('cascade');
-            $table->foreignUuid('resume_id')->constrained()->onDelete('cascade');
-            $table->text('summary');
+            $table->foreignUuid('reviewer_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignUuid('resume_id')->constrained()->cascadeOnDelete();
+            $table->text('summary')->nullable();
             $table->enum('status', ReviewStatusEnum::values())->default(ReviewStatusEnum::PENDING->value);
-            $table->dateTimeTz('assigned_at');
+            $table->dateTimeTz('assigned_at')->nullable();
             $table->timestamps();
         });
     }

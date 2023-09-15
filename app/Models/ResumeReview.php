@@ -12,6 +12,12 @@ class ResumeReview extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $fillable = [
+        'reviewer',
+        'resume',
+        'summary'
+    ];
+
     public function resume(): BelongsTo{
         return $this->belongsTo(Resume::class);
     }

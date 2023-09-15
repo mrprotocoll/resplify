@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('resumes', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('job_titles')->nullable();
             $table->foreignUuid('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

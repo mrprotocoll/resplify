@@ -36,13 +36,7 @@ class ResumeController extends Controller
 
         if ($request->hasFile('resumes')) {
             foreach ($request->file('resumes') as $resume) {
-                $resumeName = "resumes/" . FileHelper::formatName($resume->getClientOriginalName());
-
-                // Store the résumé in the 'public' disk (storage/app/public)
-                Storage::disk('public')->put($resumeName, file_get_contents($resume));
-
-                // Save the resume file name in the database
-                $save = $user->resumes()->create(['name' => $resumeName]);
+                $save = Resume::upload($resume);
                 if ($save) {
                     $count++;
                     $successfullyStoredResumes[] = new ResumeResource($save);

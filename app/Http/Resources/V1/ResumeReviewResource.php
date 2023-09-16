@@ -14,6 +14,10 @@ class ResumeReviewResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            "resume" => new ResumeResource($this->resume),
+            "status" => $this->status,
+            "summary" => $this->summary,
+        ];
     }
 }

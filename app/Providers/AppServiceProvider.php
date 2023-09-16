@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        /**
+         * Error and Exception handling
+         */
+        set_error_handler("App\\Helpers\\ErrorHelper::errorHandler");
+        set_exception_handler("App\\Helpers\\ErrorHelper::exceptionHandler");
     }
 }

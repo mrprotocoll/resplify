@@ -37,7 +37,7 @@ class ErrorHelper{
        $error .= " with Message: ". $e->getMessage();
        $error .= "\nStack trace: ". $e->getTraceAsString();
        $error .= "\nThrown in: ". $e->getFile(). " on line ". $e->getLine();
-       // echo $log_file; exit;
+        print($logFile);
       if(env('APP_ENV') !== 'local'){
          Log::error($error);
       }else{

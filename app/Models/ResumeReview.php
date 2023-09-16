@@ -23,7 +23,7 @@ class ResumeReview extends Model
     }
 
     public function reviewer(): BelongsTo{
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'reviewer_id');
     }
 
     public function remarks(): BelongsToMany{

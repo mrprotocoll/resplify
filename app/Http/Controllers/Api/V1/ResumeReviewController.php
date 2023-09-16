@@ -13,6 +13,7 @@ use App\Models\ResumeReview;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class ResumeReviewController extends Controller
@@ -32,34 +33,26 @@ class ResumeReviewController extends Controller
      */
     public function store(ResumeReviewRequest $request): JsonResponse|ResumeResource
     {
-        try {
+        $savedResume = null;
+        DB::transaction(function () use ($request) {
             $savedResume = Resume::upload($request->file('resume'), $request->job_titles);
             if($savedResume) {
                 // create a new resume request from the newly created resume résumé
-                $savedResume->review()->create([
-                    "reviewer_id" => $request->reviewer,
-                ]);
+                $review = new ResumeReview();
+                $review->reviewer_id = $request->reviewer;
+                $review->resume_id = $savedResume->id;
+                $review->save();
             }
+        });
 
-            return new ResumeResource($savedResume);
-        }
-        catch (\Exception) {
-            return GlobalHelper::error();
-        }
+        // TODO:: Send Email to customer and reviewer of a new review
+        return GlobalHelper::response(message: "Review created successfully", status: 200);
     }
 
     /**
      * Display the specified resource.
      */
     public function show(ResumeReview $resumeReview)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ResumeReview $resumeReview)
     {
         //
     }

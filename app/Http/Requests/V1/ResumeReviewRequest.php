@@ -25,7 +25,7 @@ class ResumeReviewRequest extends FormRequest
     {
         if(User::current()->isUser()) {
             return [
-                'resume' => ['required', 'mime:pdf,doc,docx', 'max:2048'],
+                'resume' => ['required','file', 'mimes:pdf,doc,docx', 'max:2048'],
                 'reviewer' => ['required', 'exists:users,id'],
                 'job_titles' => ['nullable', 'string']
             ];

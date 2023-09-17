@@ -9,16 +9,8 @@ use App\Http\Resources\V1\RemarkResource;
 use App\Models\Remark;
 use Illuminate\Http\Request;
 
-class RemarksController extends Controller
+class RemarkController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        $remarks = Remark::all();
-        return $remarks ? new RemarkResource($remarks) : GlobalHelper::error();
-    }
 
     /**
      * Store a newly created resource in storage.

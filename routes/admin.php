@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Api\V1\Admin\RemarkController;
 use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/reviewers', [UserController::class, 'reviewer']);
         // get all admins
         Route::get('/admins', [UserController::class, 'admin']);
+        // remarks
+        Route::apiResource('/remarks', RemarkController::class)
+            ->only(['destroy','store', 'update']);
     });
 });

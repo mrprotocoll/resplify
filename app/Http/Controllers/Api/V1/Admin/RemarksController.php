@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\RemarkRequest;
+use App\Http\Resources\V1\RemarkResource;
 use App\Models\Remark;
 use Illuminate\Http\Request;
 
@@ -13,47 +16,27 @@ class RemarksController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $remarks = Remark::all();
+        return $remarks ? new RemarkResource($remarks) : GlobalHelper::error();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RemarkRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Remark $remarks)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Remark $remarks)
-    {
-        //
+        $remark = new Remark();
+        $remark->name = $request->name;
+        return $remark->save() ? new RemarkResource($remark) : GlobalHelper::error();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Remark $remarks)
+    public function update(RemarkRequest $request, Remark $remarks)
     {
-        //
+        $remarks->name = $request->name;
+        return $remarks->save() ? new RemarkResource($remarks) : GlobalHelper::error();
     }
 
     /**
@@ -61,6 +44,7 @@ class RemarksController extends Controller
      */
     public function destroy(Remark $remarks)
     {
-        //
+        $deleted = $remarks;
+        return $remarks->delete() ? new RemarkResource($deleted) : GlobalHelper::error();
     }
 }

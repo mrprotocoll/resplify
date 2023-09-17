@@ -14,9 +14,13 @@ class ResumeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $jobs = $this->job_titles
+            ? array_map(fn($job) => trim($job), explode(',', $this->job_titles))
+            : '';
+
         return [
             'id' => $this->id,
-            'job_titles' => $this->job_titles,
+            'job_titles' => $jobs,
             'url' => asset('storage/' . $this->name), // Return the full URL to the image
         ];
     }

@@ -31,7 +31,8 @@ class ResumeReviewRequest extends FormRequest
             ];
         }else {
             return [
-                //
+                'summary' => ['required', 'string'],
+                'remark' => ['array', 'required'],
             ];
         }
     }

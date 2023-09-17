@@ -61,7 +61,7 @@ class User extends Authenticatable
      * @return HasMany
      */
     public function reviews(): HasMany {
-        return $this->hasMany(ResumeReview::class);
+        return $this->hasMany(ResumeReview::class, 'reviewer_id');
     }
 
     /**

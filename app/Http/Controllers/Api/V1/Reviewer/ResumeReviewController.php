@@ -8,8 +8,10 @@ use App\Http\Requests\V1\ResumeRequest;
 use App\Http\Requests\V1\ResumeReviewRequest;
 use App\Http\Resources\V1\ResumeResource;
 use App\Http\Resources\V1\ResumeReviewResource;
+use App\Models\Remark;
 use App\Models\Resume;
 use App\Models\ResumeReview;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,22 +32,22 @@ class ResumeReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ResumeReviewRequest $request): JsonResponse|ResumeResource
+    public function store(ResumeReviewRequest $request, ResumeReview $review): JsonResponse|ResumeResource
     {
-        $savedResume = null;
-        DB::transaction(function () use ($request) {
-            $savedResume = Resume::upload($request->file('resume'), $request->job_titles);
-            if($savedResume) {
-                // create a new resume request from the newly created resume résumé
-                $review = new ResumeReview();
-                $review->reviewer_id = $request->reviewer;
-                $review->resume_id = $savedResume->id;
-                $review->save();
+        $review->summary = $request->summary;
+        DB::transaction(function () use ($request, $review) {
+            $review->save();
+            foreach ($request->remarks as $remark) {
+                $remark = Remark::findOrFail($remark->id);
+                $review->remarks()->attach($remark, [
+                    'description' => $remark->description,
+                    'score' => $remark->score
+                ]);
             }
         });
 
-        // TODO:: Send Email to customer and reviewer of a new review
-        return GlobalHelper::response(message: "Review created successfully", status: 200);
+        // TODO:: Send Email to customer of review on their resume
+        return GlobalHelper::response(data: new ResumeReviewResource($review) ,message: "Review created successfully", status: 200);
     }
 
     /**

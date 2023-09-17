@@ -96,13 +96,15 @@ class User extends Authenticatable
         return $user->hasRole(RoleEnum::ADMIN);
     }
 
-    public function isReviewer(): bool
+    public static function isReviewer(User $user = null): bool
     {
-        return $this->hasRole(RoleEnum::REVIEWER);
+        $user = $user ?? self::current();
+        return $user->hasRole(RoleEnum::REVIEWER);
     }
 
-    public function isUser(): bool
+    public static function isUser(User $user = null): bool
     {
-        return $this->hasRole(RoleEnum::USER);
+        $user = $user ?? self::current();
+        return $user->hasRole(RoleEnum::USER);
     }
 }

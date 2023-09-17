@@ -23,7 +23,7 @@ class ResumeReviewRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(User::current()->isUser()) {
+        if(User::isUser()) {
             return [
                 'resume' => ['required','file', 'mimes:pdf,doc,docx', 'max:2048'],
                 'reviewer' => ['required', 'exists:users,id'],
@@ -33,6 +33,9 @@ class ResumeReviewRequest extends FormRequest
             return [
                 'summary' => ['required', 'string'],
                 'remark' => ['array', 'required'],
+                'remark.*.id' => ['required', 'exist:remarks,id'],
+                'remark.*.description' => ['required', 'string'],
+                'remark.*.score' => ['required', 'numeric']
             ];
         }
     }

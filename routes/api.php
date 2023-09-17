@@ -5,8 +5,6 @@ use App\Http\Controllers\Api\V1\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Api\V1\Auth\VerifyEmailController;
 use App\Http\Controllers\Api\V1\RemarkController;
 use App\Http\Controllers\Api\V1\UserController;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->group(function () {
     // get currently logged-in user
     Route::get('/me', [UserController::class, 'show']);
-    Route::get('/remarks', RemarkController::class);
+    Route::get('/remarks', [RemarkController::class, 'index']);
 });
 
 // Authentications

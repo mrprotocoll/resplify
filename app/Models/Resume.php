@@ -15,6 +15,7 @@ class Resume extends Model
 {
     use HasFactory, HasUuids;
 
+
     protected $fillable = [
         'name',
         'job_titles'

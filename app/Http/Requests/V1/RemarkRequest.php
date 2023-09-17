@@ -22,7 +22,9 @@ class RemarkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'unique:remarks, name']
+            'name' => ['required', 'string', 'unique:remarks, name'],
+            'image' => ['nullable','file', 'mimes:png,jpg', 'max:2048'],
+            'description' => ['required', 'text'],
         ];
     }
 }

@@ -69,7 +69,7 @@ class User extends Authenticatable
      * @return HasMany
      */
     public function remarks(): HasMany {
-        return $this->hasMany(Remark::class);
+        return $this->hasMany(Remark::class, 'created_by');
     }
 
     /**
@@ -90,9 +90,10 @@ class User extends Authenticatable
         return $this->roles()->where('name', $role->value)->exists();
     }
 
-    public function isAdmin(): bool
+    public static function isAdmin(User $user = null): bool
     {
-        return $this->hasRole(RoleEnum::ADMIN);
+        $user = $user ?? self::current();
+        return $user->hasRole(RoleEnum::ADMIN);
     }
 
     public function isReviewer(): bool

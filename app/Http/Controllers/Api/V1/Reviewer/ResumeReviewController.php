@@ -53,26 +53,25 @@ class ResumeReviewController extends Controller
         return GlobalHelper::response(data: new ResumeReviewResource($review) ,message: "Resume reviewed successfully", status: 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(ResumeReview $resumeReview)
     {
-        //
+        if(!$resumeReview->exists()){
+            GlobalHelper::error('Could not update status. Try again', 404);
+        }
+
+        return new ResumeReviewResource($resumeReview);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function updateStatus(Request $request, ResumeReview $resumeReview)
+    public function updateStatus(Request $request, ResumeReview $resumeReview): JsonResponse
     {
         $validated = $request->validate([
             'status' => ['required', Rule::in(ReviewStatusEnum::values())]
         ]);
 
         $resumeReview->status = $validated->status;
-        $resumeReview->save();
 
-        return GlobalHelper::response(data: new ResumeReviewResource($resumeReview) ,message: "Resume status updated successfully", status: 200);
+        return $resumeReview->save()
+            ? GlobalHelper::response(data: new ResumeReviewResource($resumeReview) ,message: "Resume status updated successfully", status: 200)
+            : GlobalHelper::error('Could not update status. Try again');
     }
 }

@@ -18,6 +18,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class ResumeReviewController extends Controller
 {
@@ -65,6 +66,13 @@ class ResumeReviewController extends Controller
      */
     public function updateStatus(Request $request, ResumeReview $resumeReview)
     {
+        $validated = $request->validate([
+            'status' => ['required', Rule::in(ReviewStatusEnum::values())]
+        ]);
 
+        $resumeReview->status = $validated->status;
+        $resumeReview->save();
+
+        return GlobalHelper::response(data: new ResumeReviewResource($resumeReview) ,message: "Resume status updated successfully", status: 200);
     }
 }

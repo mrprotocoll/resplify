@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ResumeReviewResource extends JsonResource
+class RemarkResumeReviewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,9 @@ class ResumeReviewResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            "resume" => new ResumeResource($this->resume),
-            "status" => $this->status,
-            "summary" => $this->summary,
-            'remarks' => [
-
-            ]
+            'remark' => (new RemarkResource($this->remark_id))->name,
+            'description' => $this->description,
+            'score' => $this->score
         ];
     }
 }

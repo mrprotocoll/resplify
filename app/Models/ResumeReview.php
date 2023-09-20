@@ -27,7 +27,7 @@ class ResumeReview extends Model
     }
 
     public function remarks(): BelongsToMany{
-        return $this->belongsToMany(Remark::class)->withPivot(['description', 'score']);
+        return $this->belongsToMany(Remark::class)->withTimestamps()->withPivot(['description', 'score']);
     }
 
 }

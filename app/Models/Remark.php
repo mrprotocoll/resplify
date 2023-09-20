@@ -23,6 +23,6 @@ class Remark extends Model
     }
 
     public function reviews(): BelongsToMany{
-        return $this->belongsToMany(ResumeReview::class)->withPivot(['description', 'score']);
+        return $this->belongsToMany(ResumeReview::class)->withTimestamps()->withPivot(['description', 'score']);
     }
 }

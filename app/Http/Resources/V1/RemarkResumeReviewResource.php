@@ -14,11 +14,12 @@ class RemarkResumeReviewResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        print_r($this->pivot);
         return [
             'id' => $this->id,
-            'remark' => (new RemarkResource($this->remark_id))->name,
-            'description' => $this->description,
-            'score' => $this->score
+            'remark' => $this->remark,
+            'description' => $this->pivot->description,
+            'score' => $this->pivot->score
         ];
     }
 }

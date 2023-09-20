@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Reviewer;
 
+use App\Enums\ReviewStatusEnum;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ResumeRequest;
@@ -36,10 +37,11 @@ class ResumeReviewController extends Controller
     {
         $review->summary = $request->summary;
         DB::transaction(function () use ($request, $review) {
+            // update review status to success
+            $review->status = ReviewStatusEnum::SUCCESS->value;
             $review->save();
             foreach ($request->remarks as $remark) {
                 $review->remarks()->attach(Remark::findOrFail($remark['id']), [
-                    'id' => $remark['id'],
                     'description' => $remark['description'],
                     'score' => $remark['score']
                 ]);
@@ -61,16 +63,8 @@ class ResumeReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ResumeReview $resumeReview)
+    public function updateStatus(Request $request, ResumeReview $resumeReview)
     {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ResumeReview $resumeReview)
-    {
-        //
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resume_review_remarks', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('remark_resume_review', function (Blueprint $table) {
+            $table->id();
             $table->foreignUuid('resume_review_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('remark_id')->constrained()->onDelete('cascade');
             $table->text('description');
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resume_review_remarks');
+        Schema::dropIfExists('remark_resume_review');
     }
 };

@@ -19,7 +19,7 @@ class ResumeReviewResource extends JsonResource
             "resume" => new ResumeResource($this->resume),
             "status" => $this->status,
             "summary" => $this->summary,
-            'remarks' => RemarkResource::collection($this->remarks)
+//            'remarks' => RemarkResource::collection($this->remarks)
         ];
     }
 }

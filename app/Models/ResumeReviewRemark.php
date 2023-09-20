@@ -12,7 +12,4 @@ class ResumeReviewRemark extends Model
 
     protected $table = 'resume_review_remarks';
 
-//    public function reviews(): BelongsToMany{
-//        return $this->
-//    }
 }

@@ -32,10 +32,10 @@ class ResumeReviewRequest extends FormRequest
         }else {
             return [
                 'summary' => ['required', 'string'],
-                'remark' => ['array', 'required'],
-                'remark.*.id' => ['required', 'exist:remarks,id'],
-                'remark.*.description' => ['required', 'string'],
-                'remark.*.score' => ['required', 'numeric']
+                'remarks' => ['array', 'required'],
+                'remarks.*.id' => ['required', 'exists:remarks,id'],
+                'remarks.*.description' => ['required', 'string'],
+                'remarks.*.score' => ['required', 'numeric']
             ];
         }
     }

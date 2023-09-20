@@ -38,7 +38,7 @@ class ResumeReviewController extends Controller
         DB::transaction(function () use ($request, $review) {
             $review->save();
             foreach ($request->remarks as $remark) {
-                $remark = Remark::findOrFail($remark->id);
+                $remark = Remark::findOrFail($remark['id']);
                 $review->remarks()->attach($remark, [
                     'id' => $remark->id,
                     'description' => $remark->description,
@@ -48,7 +48,7 @@ class ResumeReviewController extends Controller
         });
 
         // TODO:: Send Email to customer of review on their resume
-        return GlobalHelper::response(data: new ResumeReviewResource($review) ,message: "Review created successfully", status: 200);
+        return GlobalHelper::response(data: new ResumeReviewResource($review) ,message: "Resume reviewed successfully", status: 200);
     }
 
     /**

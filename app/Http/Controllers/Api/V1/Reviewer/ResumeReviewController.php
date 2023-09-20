@@ -40,6 +40,7 @@ class ResumeReviewController extends Controller
             foreach ($request->remarks as $remark) {
                 $remark = Remark::findOrFail($remark->id);
                 $review->remarks()->attach($remark, [
+                    'id' => $remark->id,
                     'description' => $remark->description,
                     'score' => $remark->score
                 ]);

@@ -65,14 +65,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Relationship with ADMIN
-     * @return HasMany
-     */
-    public function remarks(): HasMany {
-        return $this->hasMany(Remark::class, 'created_by');
-    }
-
-    /**
      * get the currently logged-in user info
      * @return \Illuminate\Contracts\Auth\Authenticatable|null
      */

@@ -18,8 +18,8 @@ class Remark extends Model
         'image'
     ];
 
-    public function user(): BelongsTo{
-        return $this->belongsTo(User::class, 'created_by');
+    public function admin(): BelongsTo{
+        return $this->belongsTo(User::class, 'admin_id');
     }
 
     public function reviews(): BelongsToMany{

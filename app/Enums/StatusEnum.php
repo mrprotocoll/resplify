@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum ReviewStatusEnum: string
+enum StatusEnum: string
 {
     case PENDING = 'pending';
     case ASSIGNED = 'assigned';
@@ -11,6 +11,6 @@ enum ReviewStatusEnum: string
 
     public static function values(): array
     {
-        return array_map(fn(ReviewStatusEnum $status) => $status->value, self::cases());
+        return array_map(fn(StatusEnum $status) => $status->value, self::cases());
     }
 }

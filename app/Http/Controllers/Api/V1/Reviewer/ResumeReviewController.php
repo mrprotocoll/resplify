@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Reviewer;
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\StatusEnum;
 use App\Helpers\GlobalHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ResumeRequest;
@@ -39,7 +39,7 @@ class ResumeReviewController extends Controller
         $review->summary = $request->summary;
         DB::transaction(function () use ($request, $review) {
             // update review status to success
-            $review->status = ReviewStatusEnum::SUCCESS->value;
+            $review->status = StatusEnum::SUCCESS->value;
             $review->save();
             foreach ($request->remarks as $remark) {
                 $review->remarks()->attach(Remark::findOrFail($remark['id']), [
@@ -65,7 +65,7 @@ class ResumeReviewController extends Controller
     public function updateStatus(Request $request, ResumeReview $resumeReview): JsonResponse
     {
         $validated = $request->validate([
-            'status' => ['required', Rule::in(ReviewStatusEnum::values())]
+            'status' => ['required', Rule::in(StatusEnum::values())]
         ]);
 
         $resumeReview->status = $validated->status;

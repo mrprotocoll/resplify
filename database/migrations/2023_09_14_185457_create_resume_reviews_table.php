@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\ReviewStatusEnum;
+use App\Enums\StatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('reviewer_id')->constrained('users')->cascadeOnDelete();
             $table->foreignUuid('resume_id')->constrained()->cascadeOnDelete();
             $table->text('summary')->nullable();
-            $table->enum('status', ReviewStatusEnum::values())->default(ReviewStatusEnum::PENDING->value);
+            $table->enum('status', StatusEnum::values())->default(StatusEnum::PENDING->value);
             $table->dateTimeTz('assigned_at')->nullable();
             $table->timestamps();
         });

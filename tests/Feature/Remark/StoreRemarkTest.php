@@ -29,7 +29,15 @@ class StoreRemarkTest extends TestCase
 
     // test that only admin can add remarks
     public function test_only_admin_can_create_remark() {
+        $data = [
+            'name' => fake()->name,
+            'description' => fake()->sentence,
+            'image' => fake()->imageUrl
+        ];
+        $response = $this->actingAs($this->admin)->postJson($this->url, $data);
 
+        $response->assertStatus(201);
+        $response->assertJsonFragment(['name']);
     }
 
     // test that remark name is not empty
@@ -46,6 +54,6 @@ class StoreRemarkTest extends TestCase
     public function test_guests_cannot_create_remark() {
         $response = $this->postJson($this->url);
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
     }
 }

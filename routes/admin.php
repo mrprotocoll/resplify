@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\RoleEnum;
+use App\Http\Controllers\Api\V1\Admin\CategoryController;
 use App\Http\Controllers\Api\V1\Admin\RemarkController;
 use App\Http\Controllers\Api\V1\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,8 @@ Route::prefix('admin')->group(function () {
         // remarks
         Route::apiResource('/remarks', RemarkController::class)
             ->only(['destroy','store', 'update']);
+        // categories
+        Route::apiResource('/categories', CategoryController::class)
+            ->except(['destroy', 'edit']);
     });
 });

@@ -51,4 +51,9 @@ class Admin extends Model
     public function categories(): HasMany {
         return $this->hasMany(Category::class, 'admin_id');
     }
+
+    public static function current(): ?\Illuminate\Contracts\Auth\Authenticatable
+    {
+        return Auth::user();
+    }
 }

@@ -6,6 +6,7 @@ use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\CategoryRequest;
 use App\Http\Resources\V1\CategoryResource;
+use App\Models\Admin;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -19,7 +20,8 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        $category = Category::create($request->validated());
+
+        $category = Admin::current()->categories()->create($request->validated());
         return $category ? ResponseHelper::success(new CategoryResource($category)) : ResponseHelper::error();
     }
 

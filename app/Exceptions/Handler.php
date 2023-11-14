@@ -27,4 +27,11 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function context(): array {
+        return array_merge(parent::context(), [
+            'url' => url()->full(),
+            'method' => request()->getMethod(),
+        ]);
+    }
 }

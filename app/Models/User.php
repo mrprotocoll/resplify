@@ -17,6 +17,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasUuids;
 
+    protected $guard = 'user';
     /**
      * The attributes that are mass assignable.
      *
@@ -70,7 +71,7 @@ class User extends Authenticatable
      */
     public static function current(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
-        return Auth::user();
+        return Auth::guard('user')->user();
     }
 
     /**

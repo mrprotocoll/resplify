@@ -12,25 +12,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
-    /**
-     * User Login.
-     *
-     * @param LoginRequest $request
-     * @return JsonResponse
-     * @throws ValidationException
-     * @response {
-     *      "token": "generated_token"
-     *      "data": {
-     *          "id": 1,
-     *          "name": "User",
-     *          "email": "user@email.com"
-     *      }
-     *  }
-     * @response 422 {
-     *      "error": "The provided credentials are incorrect."
-     * }
-     *
-     */
+
     public function store(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
         $request->authenticate();
@@ -39,33 +21,30 @@ class AuthenticatedSessionController extends Controller
         $device = substr($request->userAgent() ?? '', 0, 255);
         $token = $user->createToken($device)->plainTextToken;
 
-        return response()->json(['token' => $token, 'data' => new UserResource($user)], 201);
+        return response()->json([
+            'message' => 'Login successful',
+            'status' => 'success',
+            'statusCode' => '200',
+            'access-token' => $token,
+            'data' => new UserResource($user)
+        ]);
 
     }
 
-    /**
-     * Logout.
-     * @authenticated
-     * @response 204 {
-     *      "message": "Logged out successfully."
-     *  }
-     * @response 402 {
-     *      "message": "Unauthorized user"
-     *  }
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
     public function destroy(Request $request): JsonResponse
     {
         if(!Auth::check()) {
             return response()->json(['message' => 'Unauthorized user'], 402);
         }
 
-        Auth::guard('api')->logout();
+        Auth::guard('user')->logout();
 
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'logged out successfuly'], 204);
+        return response()->json([
+            'message' => 'logged out successfuly',
+            'status' => 'success',
+            'statusCode' => '204',
+        ], 204);
     }
 }

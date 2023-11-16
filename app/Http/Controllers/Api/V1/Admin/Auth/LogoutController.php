@@ -18,12 +18,20 @@ class LogoutController extends Controller
     public function __invoke(Request $request) : JsonResponse
     {
         //
-        $user = Auth::user();
-        if(!Auth::check()) {
-            return response()->json(['message' => 'Unauthorized user'], 402);
+        $user = Auth::guard('admin')->user();
+        if(!Auth::guard('admin')->check()) {
+            return response()->json([
+                'message' => 'Unauthorized user',
+                'status' => 'error',
+                'statusCode' => '402',
+            ], 402);
         }
         $user->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'logged out successfuly'], 204);
+        return response()->json([
+            'message' => 'logged out successfuly',
+            'status' => 'success',
+            'statusCode' => '204',
+        ], 204);
     }
 }

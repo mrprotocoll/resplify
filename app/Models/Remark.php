@@ -19,7 +19,7 @@ class Remark extends Model
     ];
 
     public function admin(): BelongsTo{
-        return $this->belongsTo(User::class, 'admin_id');
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 
     public function reviews(): BelongsToMany{

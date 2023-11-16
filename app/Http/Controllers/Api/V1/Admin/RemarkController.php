@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Helpers\FileHelper;
 use App\Helpers\GlobalHelper;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\RemarkRequest;
 use App\Http\Resources\V1\RemarkResource;
+use App\Models\Admin;
 use App\Models\Remark;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -15,13 +17,10 @@ use Illuminate\Support\Facades\Storage;
 class RemarkController extends Controller
 {
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(RemarkRequest $request)
     {
         $remark = new Remark();
-        $remark->created_by = User::current()->id;
+        $remark->created_by = Admin::current()->id;
         $remark->name = $request->name;
         $remark->description = $request->description;
         $image = $request->file('image');
@@ -30,14 +29,9 @@ class RemarkController extends Controller
         }
 
         $saved = $remark->save();
-        return $saved ? new RemarkResource($remark) : GlobalHelper::error();
+        return $saved ? ResponseHelper::success(new RemarkResource($remark)) : ResponseHelper::error();
     }
 
-
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(RemarkRequest $request, Remark $remarks)
     {
         $remarks->name = $request->name;
@@ -46,7 +40,7 @@ class RemarkController extends Controller
         if($image) {
             $remarks->image = FileHelper::upload($image, 'remarks');
         }
-        return $remarks->save() ? new RemarkResource($remarks) : GlobalHelper::error();
+        return $remarks->save() ? ResponseHelper::success(new RemarkResource($remarks)) : ResponseHelper::error();
     }
 
     /**
@@ -55,6 +49,6 @@ class RemarkController extends Controller
     public function destroy(Remark $remarks)
     {
         $deleted = $remarks;
-        return $remarks->delete() ? new RemarkResource($deleted) : GlobalHelper::error();
+        return $remarks->delete() ? ResponseHelper::success(new RemarkResource($deleted)) : ResponseHelper::error();
     }
 }

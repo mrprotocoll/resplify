@@ -4,45 +4,45 @@ namespace App\Http\Controllers\Api\V1\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Auth\RegisterRequest;
-use App\Http\Resources\V1\UserResource;
-use App\Models\User;
+use App\Http\Resources\V1\AdminResource;
+use App\Models\Admin;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 
-/**
- * @group Authentication
- *
- * Endpoint to manage user authentication
- */
+
 class RegisterController extends Controller
 {
-    /**
-     * Register a new admin.
-     *
-     * @response 422 {
-     *       "error": "Account already exist, kindly login"
-     * }
-     * @apiResource App\Http\Resources\V1\UserResource
-     * @apiResourceModel App\Models\User
-     * @param RegisterRequest $request
-     * @return UserResource | JsonResponse
-     */
+
     public function __invoke(RegisterRequest $request)
     {
         // check if user already exist
 
-        if(User::where("email", $request->email)->where("role", 'admin')->exists()){
-            return response()->json(["message" => "Account already exist, kindly login"]);
+        if(Admin::where("email", $request->email)->exists()){
+            return response()->json([
+                "message" => "Account already exist, kindly login",
+                'status' => 'error',
+                'statusCode' => '204',
+            ]);
         }
 
         $request->password = Hash::make($request->password);
-        $user = User::create($request->validated());
+        $user = Admin::create($request->validated());
         if($user) {
             event(new Registered($user));
-            return new UserResource($user);
+
+            return response()->json([
+                'message' => 'Registration successful',
+                'status' => 'success',
+                'statusCode' => '201',
+                'data' => new AdminResource($user)
+            ]);
+
         }else{
-            return response()->json(["message" => "Error occurred. Please try again"], 422);
+            return response()->json([
+                "message" => "Error occurred. Please try again",
+                'status' => 'error',
+                'statusCode' => '422',
+            ], 422);
         }
     }
 }

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:user'])->group(function () {
     // get currently logged-in user
     Route::get('/me', [UserController::class, 'show']);
     Route::get('/remarks', [RemarkController::class, 'index']);

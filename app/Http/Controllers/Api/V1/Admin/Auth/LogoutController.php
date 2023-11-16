@@ -14,18 +14,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class LogoutController extends Controller
 {
-    /**
-     * Admin Logout.
-     * @authenticated
-     * @response 204 {
-     *      "message": "Logged out successfully."
-     *  }
-     * @response 402 {
-     *      "message": "Unauthorized user"
-     *  }
-     *
-     * @return JsonResponse
-     */
+
     public function __invoke(Request $request) : JsonResponse
     {
         //

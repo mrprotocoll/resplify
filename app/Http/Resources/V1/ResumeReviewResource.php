@@ -17,7 +17,7 @@ class ResumeReviewResource extends JsonResource
         // reviews
         return [
             'resume' => new ResumeResource($this->resume),
-            'remarks' => RemarkResource::collection($this->remarks),
+            'remarks' => ReviewRemarksResource::collection($this->remarks),
             'reviewer' => new UserResource($this->reviwer->id),
             'summary' => $this->summary,
             'createdAt' => $this->created_at->toDateTimeString(),

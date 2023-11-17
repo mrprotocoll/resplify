@@ -20,7 +20,13 @@ class GlobalHelper
         return $status ? response()->json($response, $status) : response()->json($response);
     }
 
-    public function dateTime($date) {
+    /**
+     * format timestamp in the format 'Y-m-d H:i:s'
+     * @param $date
+     * @return string
+     */
+    public static function dateTime($date): string
+    {
         return $date->toDateTimeString();
     }
 }

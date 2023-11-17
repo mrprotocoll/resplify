@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Helpers\GlobalHelper;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ResumeRequest;
 use App\Http\Requests\V1\ResumeReviewRequest;
@@ -18,35 +19,40 @@ use Illuminate\Support\Facades\Log;
 
 class ResumeReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Resume $resume)
     {
-        //
-        $reviews = $resume->reviews()->with(['reviewer']);
-        return ResumeReviewResource::collection($reviews);
+        try {
+            $reviews = $resume->reviews()->with(['reviewer']);
+            return ResumeReviewResource::collection($reviews);
+        }catch (\Exception $e) {
+            Log::error($e);
+            return ResponseHelper::error();
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ResumeReviewRequest $request): JsonResponse|ResumeResource
     {
-        $savedResume = null;
-        DB::transaction(function () use ($request) {
-            $savedResume = Resume::upload($request->file('resume'), $request->job_titles);
-            if($savedResume) {
-                // create a new resume request from the newly created resume résumé
-                $review = new ResumeReview();
-                $review->reviewer_id = $request->reviewer;
-                $review->resume_id = $savedResume->id;
-                $review->save();
-            }
-        });
+        try {
+            DB::transaction(function () use ($request) {
+                $savedResume = Resume::upload($request->file('resume'), $request->job_titles);
+                if($savedResume) {
+                    // create a new resume request from the newly created resume résumé
+                    $review = new ResumeReview();
+                    $review->reviewer_id = $request->reviewer;
+                    $review->resume_id = $savedResume->id;
+                    $review->save();
+                }
+            });
 
-        // TODO:: Send Email to customer and reviewer of a new review
-        return GlobalHelper::response(message: "Review created successfully", status: 200);
+            // TODO:: Send Email to customer and reviewer of a new review
+            return ResponseHelper::success(message: "Review created successfully", status: 200);
+        }catch (\Exception $e) {
+            Log::error($e);
+            DB::rollBack();
+            return ResponseHelper::error();
+        }
+
     }
 
     /**

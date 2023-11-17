@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Carbon;
 
 class GlobalHelper
 {
@@ -17,5 +18,9 @@ class GlobalHelper
         if($data) $response['date'] = $data;
         if($message) $response['message']  = $message;
         return $status ? response()->json($response, $status) : response()->json($response);
+    }
+
+    public function dateTime($date) {
+        return $date->toDateTimeString();
     }
 }

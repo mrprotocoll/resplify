@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
     public function destroy(Request $request): JsonResponse
     {
-        if(!Auth::check()) {
+        if(!Auth::guard('user')->check()) {
             return response()->json(['message' => 'Unauthorized user'], 402);
         }
 

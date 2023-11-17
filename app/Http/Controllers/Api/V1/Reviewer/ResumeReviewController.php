@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Reviewer;
 
 use App\Enums\StatusEnum;
 use App\Helpers\GlobalHelper;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\ResumeRequest;
 use App\Http\Requests\V1\ResumeReviewRequest;
@@ -22,13 +23,17 @@ use Illuminate\Validation\Rule;
 
 class ResumeReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        $reviews = User::current()->reviews()->paginate();
-        return ResumeReviewResource::collection($reviews);
+        try {
+            $reviews = User::current()->reviews()->paginate();
+            return ResponseHelper::success(ResumeReviewResource::collection($reviews));
+        }catch (\Exception $e) {
+            Log::error($e);
+            return ResponseHelper::error();
+        }
+
     }
 
     /**

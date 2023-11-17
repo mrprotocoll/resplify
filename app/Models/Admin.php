@@ -61,4 +61,9 @@ class Admin extends Authenticatable
     {
         return Auth::guard('admin')->user();
     }
+
+    public static function exists()
+    {
+        return Auth::guard('admin')->check();
+    }
 }

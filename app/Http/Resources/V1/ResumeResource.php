@@ -22,6 +22,7 @@ class ResumeResource extends JsonResource
             'id' => $this->id,
             'job_titles' => $jobs,
             'url' => asset('storage/' . $this->name), // Return the full URL to the image
+            'createdAt' =>
         ];
     }
 }

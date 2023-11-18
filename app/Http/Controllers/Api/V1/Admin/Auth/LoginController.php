@@ -35,11 +35,11 @@ class LoginController extends Controller
         $token = $user->createToken($device)->plainTextToken;
 
         return response()->json([
+            'access-token' => $token,
+            'data' => new AdminResource($user),
             'message' => 'Login successful',
             'status' => 'success',
-            'statusCode' => '200',
-            'access-token' => $token,
-            'data' => new AdminResource($user)
+            'statusCode' => '200'
         ]);
     }
 }

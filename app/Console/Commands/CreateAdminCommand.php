@@ -2,9 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\RoleEnum;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -39,7 +37,7 @@ class CreateAdminCommand extends Command
 
         $validator = Validator::make($user, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'max:255', 'email', 'unique:'.User::class],
+            'email' => ['required', 'string', 'max:255', 'email', 'unique:'.Admin::class],
             'password' => ['required', Password::defaults()],
         ]);
 
@@ -54,12 +52,12 @@ class CreateAdminCommand extends Command
 
         DB::transaction(function () use ($user) {
             $user['password'] = Hash::make($user['password']);
-            $user = User::create($user);
-            $role = Role::where('name', RoleEnum::ADMIN)->first();
-            $user->roles()->attach($role);
+            $user = Admin::create($user);
+//            $role = Role::where('name', RoleEnum::ADMIN)->first();
+//            $user->roles()->attach($role);
         });
 
-        $this->info('User '.$user['email'].' created successfully');
+        $this->info('Admin '.$user['email'].' created successfully');
 
         return 0;
     }

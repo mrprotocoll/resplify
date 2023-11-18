@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         /**
          * Error and Exception handling
          */
-        set_error_handler("App\\Helpers\\ErrorHelper::errorHandler");
-        set_exception_handler("App\\Helpers\\ErrorHelper::exceptionHandler");
+//        set_error_handler("App\\Helpers\\ErrorHelper::errorHandler");
+//        set_exception_handler("App\\Helpers\\ErrorHelper::exceptionHandler");
     }
 }

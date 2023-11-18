@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Enums\RoleEnum;
 use App\Helpers\GlobalHelper;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\UserResource;
 use App\Models\User;
@@ -11,6 +12,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -58,16 +60,6 @@ class UserController extends Controller
         return $this->index(RoleEnum::USER);
     }
 
-    /**
-     * Display a listing of users with the "REVIEWER" role.
-     *
-     * Retrieve a paginated list of users with the "REVIEWER" role.
-     *
-     * @queryParam page int The page number for pagination (default: 1).
-     * @queryParam per_page int The number of items per page (default: 15).
-     *
-     * @return ResourceCollection
-     */
     public function reviewer(): ResourceCollection
     {
         return $this->index(RoleEnum::REVIEWER);
@@ -103,15 +95,21 @@ class UserController extends Controller
      */
     public function show(string $id): JsonResponse|UserResource
     {
-        // Find the user by ID
-        $user = User::find($id);
+        try {
+            // Find the user by ID
+            $user = User::find($id);
 
-        if (!$user) {
-            // Return a 404 response if the user is not found
-            return GlobalHelper::response(message: 'User not found', status: 404);
+            if (!$user) {
+                // Return a 404 response if the user is not found
+                return ResponseHelper::error(message: 'User not found', status: 404);
+            }
+
+            // Return a successful response with the user resource
+            return ResponseHelper::success(new UserResource($user));
+        }catch (\Exception $e) {
+            Log::error($e);
+            return ResponseHelper::error();
         }
 
-        // Return a successful response with the user resource
-        return new UserResource($user);
     }
 }
